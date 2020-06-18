@@ -20,14 +20,14 @@ mysql = MySQL(app)
 
 @app.route("/")
 def index():
-    if not "username" in session:
+    if "username" not in session:
         return redirect(url_for("login"))
     return render_template("index.html", username=ms.escape(session["username"]))
 
 
 @app.route("/timer")
 def timer():
-    if not "username" in session:
+    if "username" not in session:
         return redirect(url_for("login"))
     conn = mysql.connect()
     cursor = conn.cursor()
