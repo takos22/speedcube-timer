@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% block head %}
         <meta charset="UTF-8" />
-        <title>{% block title %}Base{% endblock title %} - Speedcube timer</title>
+        <title>{% block title %}{% endblock title %} - Sppedcube timer</title>
+        {% endblock head %}
     </head>
     <body>
-        <div class="header">{% block header %}
-            <h1>Speedcube timer</h1>
+        <div id="header">{% block header %}
+            <h1>Cube timer</h1>
+            <h2>By takos</h2>
         {% endblock header %}</div>
+
+        <div id="content">{% block content %}
+            Content{% endblock content %}
+        </div>
+
+        <div id="footer">{% block footer %}
+            Footer
+        {% endblock footer %}</div>
     </body>
 </html>
