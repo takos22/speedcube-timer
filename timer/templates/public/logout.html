@@ -1,5 +1,4 @@
 {% extends "base.html" %} {% block title %}Index{% endblock title %} {% block content %}
-<h3>Hello {{username if username else "World"}}</h3>
-<a href="/timer">Timer</a>
-<a href="/logout">Logout</a>
+<h3>Successfully loged out</h3>
+<p><a href="{{ url_for("login") }}">Click here to login</a></p>
 {% endblock content %}
