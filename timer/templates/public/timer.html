@@ -1,3 +1,16 @@
-{% extends "base.html" %} {% block title %}Timer{% endblock title %} {% block content %}
+{% extends "base.html" %} {% block header %} {{super()}}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/timer.css') }}" />
+{% endblock header %} {% block title %}Timer{% endblock title %} {% block content %}
 <h3>Hello {{username if username else "World"}}</h3>
+<div id="timer">
+    <div id="time">0.000</div>
+</div>
+<div id="last_times">
+    <ul>
+        {% for i, time in enumerate(times) %}
+        <li>#{{i+1}}: {{time}}s</li>
+        {% endfor %}
+    </ul>
+</div>
+<script src="{{ url_for('static', filename='js/timer.js') }}"></script>
 {% endblock content %}

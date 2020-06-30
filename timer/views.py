@@ -17,7 +17,8 @@ def timer():
     if "username" not in session:
         return redirect(url_for("login"))
 
-    return render_template("public/timer.html", username=ms.escape(session["username"]))
+    times = [30, 42, 37, 36, 48, 25]
+    return render_template("public/timer.html", username=ms.escape(session["username"]), times=times[:10 if len(times) >= 10 else None], enumerate=enumerate)
 
 
 @app.route("/login", methods=["GET", "POST"])
