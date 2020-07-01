@@ -1,9 +1,8 @@
-import os
 from flask import Flask
-from dotenv import load_dotenv
+from config import Config
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'for dev')
+app.config.from_object(Config)
 
 from timer import views
 from timer import admin_views
