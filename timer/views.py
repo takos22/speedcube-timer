@@ -1,8 +1,8 @@
 import os
-from flask import redirect, render_template, request, send_from_directory, session, url_for
 import markupsafe as ms
-
+from flask import flash, redirect, render_template, request, send_from_directory, session, url_for
 from timer import app
+from timer.forms import LoginForm
 
 
 @app.route("/")
@@ -23,10 +23,11 @@ def timer():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        session["username"] = request.form["username"]
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash(f"Login requested for user {form.username.data}, remember_me={form.remember_me.data}")
         return redirect(url_for("index"))
-    return render_template("public/login.html")
+    return render_template("public/login.html", form=form)
 
 
 @app.route('/logout')
