@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% block head %}
+        {% block head %}{% endblock head %}
         <meta charset="UTF-8" />
         <link
             rel="stylesheet"
@@ -9,7 +9,6 @@
             href="{{ url_for('static', filename='css/style.css') }}"
         />
         <title>{% block title %}{% endblock title %} - Sppedcube timer</title>
-        {% endblock head %}
     </head>
     <body>
         <div id="header">
@@ -47,10 +46,21 @@
                     </a>
                 </li>
             </ul>
-            {% endblock header %}
         </div>
+        {% endblock header %}
 
-        <div id="content">{% block content %} Content {% endblock content %}</div>
+        <div id="content">
+            {% with messages = get_flashed_messages() %} {% if messages %}
+            <div id="flash">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %} {% endwith %}
+            {% block content %} Content {% endblock content %}
+        </div>
 
         <div id="footer">{% block footer %} By Takos {% endblock footer %}</div>
     </body>

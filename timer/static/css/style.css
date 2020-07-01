@@ -52,6 +52,10 @@ body {
     background-color: #111;
 }
 
+#flash ul {
+    list-style-type: none;
+}
+
 #content {
     margin-top: 60px;
     padding-top: 10px;
