@@ -11,7 +11,7 @@ class User(db.Model):
     posts = db.relationship("Time", backref="cuber", lazy="dynamic")
 
     def __repr__(self):
-        return f"<User id={self.id} username={self.username} email={self.email} password_hash=********>"
+        return f"<User username={self.username} email={self.email}>"
 
 
 class Time(db.Model):
@@ -21,4 +21,4 @@ class Time(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"<Time id={self.id} user_id={self.user_id} time_ms={self.time_ms} timestamp={self.timestamp}>"
+        return f"<Time cuber={self.cuber} time_ms={self.time_ms} timestamp={self.timestamp}>"
