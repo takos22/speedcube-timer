@@ -16,6 +16,16 @@
             <h1><a href="{{ url_for('timer') }}">Cube timer</a></h1>
             <ul>
                 <li>
+                    {% if current_user.is_anonymous %}
+                    <a href="{{ url_for('login') }}">
+                        <img
+                            width="40"
+                            height="40"
+                            src="{{ url_for('static', filename='img/login.svg') }}"
+                            alt="login"
+                        />
+                    </a>
+                    {% else %}
                     <a href="{{ url_for('logout') }}">
                         <img
                             width="40"
@@ -24,6 +34,7 @@
                             alt="logout"
                         />
                     </a>
+                    {% endif %}
                 </li>
                 <li>
                     <a href="{{ url_for('timer') }}">
@@ -58,8 +69,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            {% endif %} {% endwith %}
-            {% block content %} Content {% endblock content %}
+            {% endif %} {% endwith %} {% block content %} Content {% endblock content %}
         </div>
 
         <div id="footer">{% block footer %} By Takos {% endblock footer %}</div>

@@ -1,39 +1,52 @@
-import os
-import markupsafe as ms
-from flask import flash, redirect, render_template, request, send_from_directory, session, url_for
 from timer import app
 from timer.forms import LoginForm
+from timer.models import User
+
+from flask import flash, redirect, render_template, request, send_from_directory, session, url_for
+from flask_login import current_user, login_user, logout_user, login_required
+from werkzeug.urls import url_parse
+import os
+import markupsafe as ms
 
 
 @app.route("/")
+@app.route("/home")
+@login_required
 def index():
-    if "username" not in session:
-        return redirect(url_for("login"))
-    return render_template("public/index.html", username=ms.escape(session["username"]))
+    return render_template("public/index.html")
 
 
 @app.route("/timer")
 def timer():
-    if "username" not in session:
-        return redirect(url_for("login"))
-
-    times = [30, 42, 37, 36, 48, 25]
-    return render_template("public/timer.html", username=ms.escape(session["username"]), times=times[:10 if len(times) >= 10 else None], enumerate=enumerate)
+    times = [30, 42, 37, 36, 48, 25] # random values for testing
+    return render_template("public/timer.html", username=ms.escape(current_user.username), times=times[:10 if len(times) >= 10 else None], enumerate=enumerate)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+
     form = LoginForm()
     if form.validate_on_submit():
-        flash(f"Login requested for user {form.username.data}, remember_me={form.remember_me.data}")
-        return redirect(url_for("index"))
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash("Invalid username or password")
+            return redirect(url_for("login"))
+
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get("next")
+        if not next_page or url_parse(next_page).netloc != "":
+            next_page = url_for("index")
+        return redirect(next_page)
+
     return render_template("public/login.html", form=form)
 
 
-@app.route('/logout')
+@app.route("/logout")
 def logout():
-    session.pop('username', None)
-    return render_template("public/logout.html")
+    logout_user()
+    return redirect(url_for("index"))
 
 
 @app.route("/favicon.ico")
