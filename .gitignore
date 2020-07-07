@@ -4,3 +4,4 @@ database.db
 .vscode
 __pycache__
 timer/__pycache__
+flask-venv/
