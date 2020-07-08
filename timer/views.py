@@ -13,13 +13,13 @@ import markupsafe as ms
 @app.route("/home")
 @login_required
 def index():
-    return render_template("public/index.html")
+    return render_template("public/index.html", current_user=current_user)
 
 
 @app.route("/timer")
 def timer():
     times = [30, 42, 37, 36, 48, 25] # random values for testing
-    return render_template("public/timer.html", username=ms.escape(current_user.username), times=times[:10 if len(times) >= 10 else None], enumerate=enumerate)
+    return render_template("public/timer.html", current_user=current_user, times=times[:10 if len(times) >= 10 else None], enumerate=enumerate)
 
 
 @app.route("/login", methods=["GET", "POST"])
