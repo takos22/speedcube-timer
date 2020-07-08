@@ -24,7 +24,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f"<User username={self.username} email={self.email}>"
+        return f"<User id={self.id} username={self.username} email={self.email}>"
 
 
 class Time(db.Model):
@@ -34,4 +34,4 @@ class Time(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"<Time cuber={self.cuber} time_ms={self.time_ms} timestamp={self.timestamp}>"
+        return f"<Time id={self.id} cuber={self.cuber} time_ms={self.time_ms} timestamp={self.timestamp}>"
