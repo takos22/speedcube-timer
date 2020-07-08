@@ -2,16 +2,16 @@ from timer import app, db
 from timer.forms import LoginForm
 from timer.models import User, Time
 
-from flask import flash, redirect, render_template, request, send_from_directory, session, url_for
+from flask import flash, redirect, render_template, request, send_from_directory, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 import os
-import markupsafe as ms
 
 
 @app.shell_context_processor
 def make_shell_context():
-    return {'db': db, 'User': User, 'Time': Time}
+    return {"db": db, "User": User, "Time": Time}
+
 
 @app.route("/")
 @app.route("/home")
@@ -22,7 +22,7 @@ def index():
 
 @app.route("/timer")
 def timer():
-    times = [30, 42, 37, 36, 48, 25] # random values for testing
+    times = [30, 42, 37, 36, 48, 25]  # random values for testing
     return render_template("public/timer.html", current_user=current_user, times=times[:10 if len(times) >= 10 else None], enumerate=enumerate)
 
 
