@@ -1,4 +1,4 @@
-from timer import app
+from timer import app, db
 from timer.forms import LoginForm
 from timer.models import User, Time
 
@@ -11,7 +11,7 @@ import markupsafe as ms
 
 @app.shell_context_processor
 def make_shell_context():
-    return {'db': app.db, 'User': User, 'Time': Time}
+    return {'db': db, 'User': User, 'Time': Time}
 
 @app.route("/")
 @app.route("/home")
