@@ -1,6 +1,6 @@
 from timer import app
 from timer.forms import LoginForm
-from timer.models import User
+from timer.models import User, Time
 
 from flask import flash, redirect, render_template, request, send_from_directory, session, url_for
 from flask_login import current_user, login_user, logout_user, login_required
@@ -8,6 +8,10 @@ from werkzeug.urls import url_parse
 import os
 import markupsafe as ms
 
+
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': app.db, 'User': User, 'Time': Time}
 
 @app.route("/")
 @app.route("/home")
