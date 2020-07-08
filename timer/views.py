@@ -68,7 +68,7 @@ def register():
         flash("User registration success")
         return redirect(url_for("login"))
 
-    return render_template("register.html", title="Register", form=form)
+    return render_template("public/register.html", form=form)
 
 
 @app.route("/favicon.ico")
