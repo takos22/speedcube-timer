@@ -1,5 +1,5 @@
 from timer import app, db
-from timer.forms import LoginForm
+from timer.forms import LoginForm, RegistrationForm
 from timer.models import User, Time
 
 from flask import flash, redirect, render_template, request, send_from_directory, url_for
@@ -51,6 +51,24 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("timer"))
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+
+        flash("User registration success")
+        return redirect(url_for("login"))
+
+    return render_template("register.html", title="Register", form=form)
 
 
 @app.route("/favicon.ico")
