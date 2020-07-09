@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}" />
+{% endblock head %} {% block title %}{{user.username}}{% endblock %} {% block content %}
+<h1>User: {{ user.username }}</h1>
+<hr />
+<ul>
+    {% for time in times %}
+    <li>{{ time.time_ms/1000 }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

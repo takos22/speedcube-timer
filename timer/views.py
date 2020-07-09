@@ -71,6 +71,17 @@ def register():
     return render_template("public/register.html", form=form)
 
 
+@app.route("/profile/<username>")
+@login_required
+def profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    times = [
+        {"cuber": user, "time_ms": 30_000},
+        {"cuber": user, "time_ms": 42_000}
+    ]
+    return render_template("public/profile.html", user=user, times=times)
+
+
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(os.path.join(app.root_path, "static"), "favicon.ico", mimetype="image/icon")
